@@ -61,41 +61,9 @@ class ClassRoom(models.Model):
     def __str__(self):
         return f"{self.standard} {self.section} - {self.nick_name}"
     
-class ClassRoomStudent(models.Model):
-    STATUS_CHOICES = [
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-    ]
-
-    class_room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
-    batch_name = models.CharField(max_length=50, unique=True)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = 'Student Batch'
-        verbose_name_plural = 'Student Batches'
-        ordering = ['start_date']
-
-    def clean(self):
-        if not self.pk:
-            return
-        for student in self.students.all():
-            student_data = students_models.Student.objects.filter(pk=student.id).first()
-            if student_data.current_standard != self.class_room.standard:
-                raise ValidationError(
-                    f"Student {student} is not in standard {self.class_room.standard}. Current standard: {student.current_standard}."
-                )
-
-    def __str__(self):
-        return f"{self.class_room.standard} {self.class_room.section} - {self.batch_name} ({self.start_date} to {self.end_date})"
-   
 class ClassRoomStudentAddable(models.Model):
-    student = models.ForeignKey(students_models.Student, on_delete=models.CASCADE, related_name='class_room_students')
-    classroom_student = models.ForeignKey(ClassRoomStudent, on_delete=models.CASCADE, related_name='students',default=None, null=True, blank=True)
+    student = models.ForeignKey('students.Student', on_delete=models.CASCADE, related_name='class_room_students')
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE, related_name='classroom',default=None, null=True, blank=True)
     roll_number = models.PositiveIntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -103,7 +71,7 @@ class ClassRoomStudentAddable(models.Model):
     class Meta:
         verbose_name = 'Class Room Student'
         verbose_name_plural = 'Class Room Students'
-        unique_together = ('student', 'classroom_student')
+        unique_together = ('student', 'classroom')
 
     def __str__(self):
         return f"{self.student.first_name} {self.student.last_name} ({self.student.admission_number or 'No Admission Number'})"

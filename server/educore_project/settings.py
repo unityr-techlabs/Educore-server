@@ -45,10 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'nested_admin',
     'accounts',
+    'announcement',
     'curriculum',
     'staff',
     'students',
-    'classroom'
+    'classroom',
+    'attendance',
+    'task',
+    'examination'
 ]
 
 MIDDLEWARE = [

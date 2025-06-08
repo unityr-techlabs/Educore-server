@@ -20,6 +20,13 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('modules.accounts.urls')),
+    path('api/announcement/', include('modules.announcement.urls')),
+    path('api/staff/', include('modules.staff.urls')),
     path('api/students/', include('modules.students.urls')),
-    path('api/staff/', include('modules.staff.urls'))
+    path('api/curriculum',include('modules.curriculum.urls')),
+    path('api/classroom',include('modules.classroom.urls')),
+    path('api/attendance',include('modules.attendance.urls')),
+    path('api/examination',include('modules.examination.urls')),
+    path('api/task',include('modules.task.urls'))
+
 ]
