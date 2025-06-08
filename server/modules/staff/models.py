@@ -1,5 +1,5 @@
 from django.db import models
-from accounts import models as user_models
+from administration import models as user_models
 from staff import models as staff_models
 
 # Create your models here.
