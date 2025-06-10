@@ -2,6 +2,7 @@ from django.db import models
 from classroom import models as classroom_models
 from staff import models as staff_models
 from students import models as students_models
+from administration import models as user_model
 
 # Create your models here.
 class ClassroomAnnouncement(models.Model):
@@ -21,7 +22,7 @@ class StaffAnnouncement(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     last_date = models.DateField(null=True,blank=True)
-    designation = models.ManyToManyField(staff_models.Designation, verbose_name='Designation')
+    designation = models.ManyToManyField(user_model.Designation, verbose_name='Designation')
 
     class Meta:
         verbose_name = 'Staff Announcement'

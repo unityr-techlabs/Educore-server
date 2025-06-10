@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.conf import settings
 
 # Create your models here.
 class User(AbstractUser):
@@ -30,6 +31,7 @@ class User(AbstractUser):
     temporary_address = models.TextField(verbose_name='Temporary Address',default=None, null=True, blank=True)
     permenent_address = models.TextField(verbose_name='Permenent Address',default=None, null=True, blank=True)
     contact_number = models.IntegerField(verbose_name='Contact Number',default=None, null=True, blank=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Created By')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,6 +39,18 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Account'
         verbose_name_plural = 'Accounts'
+        
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.user_type}"
+    
+class Designation(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Designation Name')
+    description = models.TextField(verbose_name='Description')
+
+    class Meta:
+        verbose_name = 'Designation'
+        verbose_name_plural = 'Designations'
+
+    def __str__(self):
+        return f"{self.name}"

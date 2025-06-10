@@ -74,5 +74,5 @@ class ClassRoomStudentAddable(models.Model):
         unique_together = ('student', 'classroom')
 
     def __str__(self):
-        return f"{self.student.first_name} {self.student.last_name} ({self.student.admission_number or 'No Admission Number'})"
+        return f"{self.student.user.first_name} {self.student.user.last_name} ({self.student.admission_number or 'No Admission Number'})"
 

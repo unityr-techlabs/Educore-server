@@ -4,16 +4,7 @@ from staff import models as staff_models
 
 # Create your models here.
 
-class Designation(models.Model):
-    name = models.CharField(max_length=200, verbose_name='Designation Name')
-    description = models.TextField(verbose_name='Description')
 
-    class Meta:
-        verbose_name = 'Designation'
-        verbose_name_plural = 'Designations'
-
-    def __str__(self):
-        return f"{self.name}"
 
 class Staff(models.Model):
     DESIGNATION_CHOICES = [
@@ -31,7 +22,7 @@ class Staff(models.Model):
     
     staff = models.ForeignKey(user_models.User ,on_delete=models.CASCADE, verbose_name='Staff', default=None, related_name='staff')
     joining_date = models.DateField()
-    joining_designation = models.ForeignKey(Designation, default=None, on_delete=models.CASCADE, verbose_name='Select Designation', null=True, blank=True)
+    joining_designation = models.ForeignKey(user_models.Designation, default=None, on_delete=models.CASCADE, verbose_name='Select Designation', null=True, blank=True)
     phone_primary = models.CharField(max_length=15)
     phone_secondary = models.CharField(max_length=15, null=True, blank=True)
     address_permanent = models.TextField()

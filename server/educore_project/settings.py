@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'nested_admin',
     'administration',
     'announcement',
@@ -66,6 +67,8 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = 'administration.User'
+
+
 
 ROOT_URLCONF = 'educore_project.urls'
 

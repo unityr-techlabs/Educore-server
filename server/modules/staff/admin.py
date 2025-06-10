@@ -4,6 +4,7 @@ import nested_admin
 
 # Register your models here.
 
+
 @admin.register(models.Staff)
 class StaffAdmin(nested_admin.NestedModelAdmin):
     
